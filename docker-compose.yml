@@ -10,6 +10,9 @@ services:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
     networks:
       - docker_elk
+    volumes:
+      - /mnt/surfacedetail/elk:/usr/share/elasticsearch/data
+    restart: always
   logstash:
     build: logstash/
     command: -f /etc/logstash/conf.d/
@@ -22,6 +25,7 @@ services:
       - docker_elk
     depends_on:
       - elasticsearch
+    restart: always
   kibana:
     build: kibana/
     volumes:
@@ -32,6 +36,7 @@ services:
       - docker_elk
     depends_on:
       - elasticsearch
+    restart: always
 
 networks:
   docker_elk:
